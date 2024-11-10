@@ -8,11 +8,19 @@ import RaceCard from '@/components/RaceCard';
 
 export default function SeasonRaces() {
     const { season } = useParams();
-    const { isCardView, toggleView } = useAppContext();
+    const { isCardView, toggleView, pinnedRaces } = useAppContext();
     const { data, isLoading, isError } = useGetSeasonRaces({ season } as { season: string });
     const races = useMemo(() => data?.MRData?.RaceTable?.Races || [], [data]);
 
-    console.log(races.length);
+    const sortedRaces = useMemo(() => {
+        if (!races.length) return [];
+
+        return [
+            ...races.filter((race) => pinnedRaces.includes(race.raceName)), // Pinned races first
+            ...races.filter((race) => !pinnedRaces.includes(race.raceName)), // Then the rest
+        ];
+    }, [races, pinnedRaces]);
+
     if (isLoading) return <p className="text-center mt-4">Loading races...</p>;
     if (isError) return <p className="text-center mt-4">Failed to load races.</p>;
 
@@ -31,7 +39,7 @@ export default function SeasonRaces() {
 
             {/* Paginated List of races with Grid/List view */}
             <PaginatedList
-                items={races}
+                items={sortedRaces}
                 itemsPerPage={9}
                 containerClassName={isCardView ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : ''}
                 renderItem={(race) => <RaceCard key={race.raceName} race={race} isCardView={isCardView} />}
