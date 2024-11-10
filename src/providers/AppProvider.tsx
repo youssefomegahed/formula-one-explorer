@@ -1,12 +1,12 @@
 'use client';
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 
 interface AppState {
     pinnedRaces: string[];
     isCardView: boolean;
     toggleView: () => void;
-    pinRace: (raceId: string) => void;
-    unpinRace: (raceId: string) => void;
+    pinRace: (raceName: string) => void;
+    unpinRace: (raceName: string) => void;
 }
 
 const AppContext = createContext<AppState | undefined>(undefined);
@@ -15,17 +15,39 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const [pinnedRaces, setPinnedRaces] = useState<string[]>([]);
     const [isCardView, setIsCardView] = useState(false);
 
-    const toggleView = () => setIsCardView((prev) => !prev);
+    // Load pinned races and card view preference from localStorage on component mount
+    useEffect(() => {
+        const savedPinnedRaces = localStorage.getItem('pinnedRaces');
+        const savedCardView = localStorage.getItem('isCardView');
 
-    const pinRace = (raceId: string) => {
-        if (!pinnedRaces.includes(raceId)) {
-            setPinnedRaces((prev) => [...prev, raceId]);
-            localStorage.setItem('pinnedRaces', JSON.stringify([...pinnedRaces, raceId]));
+        if (savedPinnedRaces) {
+            setPinnedRaces(JSON.parse(savedPinnedRaces));
+        }
+        if (savedCardView !== null) {
+            setIsCardView(JSON.parse(savedCardView));
+        }
+    }, []);
+
+    // Toggle the card view and persist it in localStorage
+    const toggleView = () => {
+        setIsCardView((prev) => {
+            const newValue = !prev;
+            localStorage.setItem('isCardView', JSON.stringify(newValue));
+            return newValue;
+        });
+    };
+
+    const pinRace = (raceName: string) => {
+        // assuming raceName is unique
+        if (!pinnedRaces.includes(raceName)) {
+            const updatedRaces = [...pinnedRaces, raceName];
+            setPinnedRaces(updatedRaces);
+            localStorage.setItem('pinnedRaces', JSON.stringify(updatedRaces));
         }
     };
 
-    const unpinRace = (raceId: string) => {
-        const updatedRaces = pinnedRaces.filter((id) => id !== raceId);
+    const unpinRace = (raceName: string) => {
+        const updatedRaces = pinnedRaces.filter((name) => name !== raceName);
         setPinnedRaces(updatedRaces);
         localStorage.setItem('pinnedRaces', JSON.stringify(updatedRaces));
     };
