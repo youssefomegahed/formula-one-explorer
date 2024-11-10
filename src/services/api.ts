@@ -9,4 +9,4 @@ export const ergastAPI: AxiosInstance = Axios.create({
     },
 });
 
-export const seasonsSVC = f1Ergast(ergastAPI);
+export const f1ErgastSVC = f1Ergast(ergastAPI);
