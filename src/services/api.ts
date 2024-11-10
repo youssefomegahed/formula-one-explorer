@@ -1,3 +1,4 @@
+'use client';
 import Axios, { AxiosInstance } from 'axios';
 import f1Ergast from './f1Ergast';
 
