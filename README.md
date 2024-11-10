@@ -71,7 +71,7 @@ For ease of testing, I have hosted this project on Vercel [here](https://formula
 Make sure you have the following installed:
 
 -   Node
--   Yarn
+-   NPM
 
 ### Steps to Run the Project
 
@@ -86,13 +86,13 @@ Make sure you have the following installed:
 2. Install the dependencies:
 
     ```bash
-    yarn install
+    npm install --force
     ```
 
 3. Run the application:
 
     ```bash
-    yarn dev
+    npm run dev
     ```
 
 4. Open the application in your browser:
