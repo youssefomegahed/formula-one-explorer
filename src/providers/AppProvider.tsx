@@ -13,7 +13,7 @@ const AppContext = createContext<AppState | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
     const [pinnedRaces, setPinnedRaces] = useState<string[]>([]);
-    const [isCardView, setIsCardView] = useState(false);
+    const [isCardView, setIsCardView] = useState(true);
 
     // Load pinned races and card view preference from localStorage on component mount
     useEffect(() => {

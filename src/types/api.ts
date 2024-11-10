@@ -71,6 +71,16 @@ export type TDriverResult = {
     Time?: TTime;
 };
 
+export type TRaceWithResults = {
+    season: string;
+    round: string;
+    url: string;
+    raceName: string;
+    Circuit: TCircuit;
+    date: string;
+    Results: TDriverResult[];
+};
+
 // Season List Response
 export type TGetSeasonListResponse = {
     MRData: TMRData & {
@@ -85,7 +95,7 @@ export type TGetSeasonRacesResponse = {
     MRData: TMRData & {
         RaceTable: {
             season: string;
-            Races: TRace[];
+            Races: [TRace];
         };
     };
 };
@@ -96,9 +106,7 @@ export type TGetRaceDetailsResponse = {
         RaceTable: {
             season: string;
             round: string;
-            Races: (TRace & {
-                Results: TDriverResult[];
-            })[];
+            Races: TRaceWithResults[];
         };
     };
 };
