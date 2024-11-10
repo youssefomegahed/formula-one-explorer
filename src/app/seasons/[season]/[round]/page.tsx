@@ -5,6 +5,7 @@ import useGetRaceDetails from '@/hooks/api/useGetRaceDetails';
 import { useAppContext } from '@/providers/AppProvider';
 import PaginatedList from '@/components/PaginatedList';
 import DriverCard from '@/components/DriverCard';
+import Link from 'next/link';
 
 export default function RaceDetails() {
     const { season, round } = useParams();
@@ -50,12 +51,18 @@ export default function RaceDetails() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="border border-gray-300 rounded py-2 px-4 w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-
-                <button
-                    onClick={toggleView}
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition ml-4">
-                    Show {isCardView ? 'List View' : 'Card View'}
-                </button>
+                <div className="flex space-x-4">
+                    <button
+                        onClick={toggleView}
+                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition ml-4">
+                        Show {isCardView ? 'List View' : 'Card View'}
+                    </button>
+                    <Link href={`/seasons/${season}/${round}/performance`}>
+                        <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition">
+                            View Performance
+                        </button>
+                    </Link>
+                </div>
             </div>
 
             {/* Paginated List of results with Grid/List view */}
