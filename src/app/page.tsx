@@ -8,7 +8,7 @@ import SeasonCard from '@/components/SeasonCard';
 export default function SeasonList() {
     const { isCardView, toggleView } = useAppContext();
     const { data, isLoading, isError } = useGetSeasonList();
-    const seasons = useMemo(() => data?.MRData.SeasonTable.Seasons || [], [data]);
+    const seasons = useMemo(() => data?.MRData?.SeasonTable?.Seasons || [], [data]);
 
     if (isLoading) return <p className="text-center mt-4">Loading seasons...</p>;
     if (isError) return <p className="text-center mt-4">Failed to load seasons.</p>;

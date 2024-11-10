@@ -1,10 +1,8 @@
+import { TSeason } from '@/types/api';
 import Link from 'next/link';
 
 type SeasonCardProps = {
-    season: {
-        season: string;
-        url: string;
-    };
+    season: TSeason;
     isCardView: boolean;
 };
 

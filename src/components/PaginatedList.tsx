@@ -15,7 +15,7 @@ export default function PaginatedList<T>({
     containerClassName = '',
 }: PaginatedListProps<T>) {
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(items.length / itemsPerPage);
+    const totalPages = Math.ceil(items.length / itemsPerPage) || 1;
 
     // Calculate the items to display for the current page
     const currentItems = useMemo(() => {

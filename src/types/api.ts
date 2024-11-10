@@ -85,7 +85,7 @@ export type TGetSeasonRacesResponse = {
     MRData: TMRData & {
         RaceTable: {
             season: string;
-            races: TRace[];
+            Races: TRace[];
         };
     };
 };
