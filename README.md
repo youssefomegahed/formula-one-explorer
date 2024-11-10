@@ -58,6 +58,9 @@ For ease of testing, I have hosted this project on Vercel [here](https://formula
         └── api.ts
         └── f1Ergast.ts
     └── 📁tests
+        └── datetime.test.tsx
+        └── DriverCard.test.tsx
+        └── PaginatedList.test.tsx
     └── 📁types
         └── api.ts
     └── 📁utils
@@ -144,6 +147,26 @@ Make sure you have the following installed:
 -   Displays the year of each season.
 -   Supports a prop `isCardView` that controls whether it appears in its card form or not.
 
+## Testing
+
+### Unit Testing with Jest
+
+Implemented unit tests for core components such as - `PaginatedList` - `DriverCard`
+
+In addition to important utilities such as: - `formatDate` - `convertMilliToSeconds`
+
+To run the tests, use the following command:
+
+```bash
+ npm run test
+```
+
+or for continuous testing (watch mode):
+
+```bash
+npm run test:watch
+```
+
 ## Screenshots
 
 ### Desktop
@@ -177,3 +200,7 @@ Make sure you have the following installed:
 -   Races List View
 
 ![alt text](/screenshots/image-7.png)
+
+```
+
+```
