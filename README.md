@@ -1,36 +1,177 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Formula One Explorer
 
-## Getting Started
+This project is a frontend application that allows users to explore Formula 1 seasons, races, and driver details using the Ergast API. The application is built using Next 15 (app router) and is designed to provide a modular, performant, and responsive interface for exploring race data, comparing driver performances, and managing favorites.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. **Season Listing**:
+
+    - Displays all available Formula 1 seasons.
+    - Toggle between List view and Card view for better usability.
+    - Pagination for handling large lists of seasons.
+
+2. **Races for a Season**:
+
+    - Fetches races for a selected season.
+    - Displays race name, circuit name, and date.
+    - Pagination for handling large lists of races.
+    - Toggle between List view and Card view for races.
+    - Pin favorite races to keep them at the top of the list (persisted after refresh).
+
+3. **Race Details**:
+    - Displays participating drivers with their name, nationality, team, and race position.
+    - Allows searching the participating drivers.
+    - Pagination for handling large lists of drivers
+    - Visualizes driver performance with a bar chart comparison of their race times.
+    - Toggle between List view and Card view for drivers.
+
+## Folder Structure
+
+```
+└── 📁src
+    └── 📁app
+        └── 📁seasons
+            └── 📁[season]
+                └── 📁[round]
+                    └── page.tsx
+                └── page.tsx
+        └── favicon.ico
+        └── globals.css
+        └── layout.tsx
+        └── page.tsx
+    └── 📁components
+        └── DriverCard.tsx
+        └── PaginatedList.tsx
+        └── RaceCard.tsx
+        └── SeasonCard.tsx
+    └── 📁hooks
+        └── 📁api
+            └── useGetRaceDetails.ts
+            └── useGetSeasonList.ts
+            └── useGetSeasonRaces.ts
+    └── 📁providers
+        └── AppProvider.tsx
+        └── ReactQueryProvider.tsx
+    └── 📁services
+        └── api.ts
+        └── f1Ergast.ts
+    └── 📁tests
+    └── 📁types
+        └── api.ts
+    └── 📁utils
+        └── datetime.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Make sure you have the following installed:
 
-## Learn More
+-   Node
+-   Yarn
 
-To learn more about Next.js, take a look at the following resources:
+### Steps to Run the Project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository to your local machine:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```bash
+    git clone https://github.com/youssefomegahed/formula-one-explorer
 
-## Deploy on Vercel
+    cd f1-explorer
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Install the dependencies:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    ```bash
+    yarn install
+    ```
+
+3. Run the application:
+
+    ```bash
+    yarn dev
+    ```
+
+4. Open the application in your browser:
+
+    ```bash
+    http://localhost:3000
+    ```
+
+## Technical Approach
+
+### State Management
+
+-   **Global State:** Managed using React Context (AppProvider). It tracks the view mode (Card/List view) and pinned races, both of which are persisted in the local storage to maintain the state even after a page refresh.
+
+-   **API Data**: Data for seasons, races and driver results are fetched using React Query for better data fetching, caching, and error handling.
+
+### Routing
+
+-   The app utilizes Next.js's powerful routing features to handle dynamic routes for different sections of the app, such as seasons, races, and race details. Pages for each season ([season]), race ([round]), and specific race details are managed through dynamic routes.
+
+### API Handling
+
+-   **Data Fetching:** API calls are made to the Ergast API to fetch season, race, and driver details. Loading and error states are handled gracefully, with a global error handler for API failures that displays a message to the user. For the sake of simplicity, error messages are shown as a basic alert and loading states are shown as a basic centered text. For a real project, more user-friendly views would be used.
+
+### UI & Styling
+
+-   **Responsive Design:** The application uses Tailwind CSS to create a responsive layout, ensuring it works well on various screen sizes (desktop, tablet, and mobile).
+
+-   **Charting:** A BarChart from recharts is used to visualize driver performance in each race.
+
+## Key Components
+
+### PaginatedList.tsx
+
+-   Handles paginated rendering of any given list. This component is reusable and is currently being used in every page in the app.
+
+### DriverCard.tsx
+
+-   Displays detailed information about each driver, including their name, nationality, team, and race position.
+-   Supports a prop `isCardView` that controls whether it appears in its card form or not.
+
+### RaceCard.tsx
+
+-   Displays information about a single race, including the race name, circuit name, and race date.
+-   Supports a prop `isCardView` that controls whether it appears in its card form or not.
+
+### SeasonCard.tsx
+
+-   Displays the year of each season.
+-   Supports a prop `isCardView` that controls whether it appears in its card form or not.
+
+## Screenshots
+
+### Desktop
+
+-   Seasons Card View
+
+![alt text](image.png)
+
+-   Races Card View
+
+![alt text](image-2.png)
+
+-   Races List View
+
+![alt text](image-3.png)
+
+-   Race Details View
+
+![alt text](image-4.png)
+
+-   Race Performance View
+
+![alt text](image-5.png)
+
+### Mobile
+
+- Races Card View
+
+![alt text](image-6.png)
+
+- Races List View
+
+![alt text](image-7.png)
