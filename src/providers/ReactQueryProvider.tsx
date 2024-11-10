@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 
+// this should ideally show a friendly toast message, but for now, will just log to console and alert
 const handleError = (error: unknown) => {
     if (error instanceof Error) {
         console.error('Global Error Handler:', error.message);
@@ -30,6 +31,7 @@ export default function ReactQueryProvider({ children }: { children: ReactNode }
                 defaultOptions: {
                     queries: {
                         retry: 2, // Automatically retry failed queries twice
+                        refetchOnWindowFocus: false, // Don't refetch on window focus (optimization)
                     },
                     mutations: {
                         retry: 0, // No retries for mutations
