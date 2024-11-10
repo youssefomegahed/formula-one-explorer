@@ -2,7 +2,7 @@
 
 This project is a frontend application that allows users to explore Formula 1 seasons, races, and driver details using the Ergast API. The application is built using Next 15 (app router) and is designed to provide a modular, performant, and responsive interface for exploring race data, comparing driver performances, and managing favorites.
 
-For ease of testing, I have hosted this project on Vercel [here](https://formula-one-explorer.vercel.app/seasons/1951).
+For ease of testing, I have hosted this project on Vercel [here](https://formula-one-explorer.vercel.app).
 
 ## Features
 
