@@ -1,0 +1,11 @@
+import Axios, { AxiosInstance } from 'axios';
+import f1Ergast from './f1Ergast';
+
+export const ergastAPI: AxiosInstance = Axios.create({
+    baseURL: 'http://ergast.com/api/f1/',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+export const seasonsSVC = f1Ergast(ergastAPI);
