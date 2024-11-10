@@ -13,18 +13,21 @@ export default function RaceDetails() {
     const { isCardView, toggleView } = useAppContext();
     const { data, isLoading, isError } = useGetRaceDetails({ season, round } as { season: string; round: string });
 
-    // Extract driver results from the fetched data
-    const driverResults = useMemo(() => data?.MRData?.RaceTable?.Races?.[0]?.Results || [], [data]);
+    // Extract driver results from the fetched data. The data seems to contain duplicate drivers for the same race, so we remove duplicates.
+    const driverResults = useMemo(
+        () =>
+            data?.MRData?.RaceTable?.Races?.[0]?.Results?.filter(
+                (result, index, self) => self.findIndex((t) => t.Driver.driverId === result.Driver.driverId) === index
+            ) || [],
+        [data]
+    );
 
     // Prepare data for performance chart
     const chartData = useMemo(() => {
-        // only include drivers with a valid time
-        return driverResults
-            .filter((result) => result?.Time?.millis)
-            .map((result) => ({
-                name: `${result.Driver.givenName} ${result.Driver.familyName}`,
-                time: convertMilliToSeconds(result?.Time?.millis) || 'N/A',
-            }));
+        return driverResults.map((result) => ({
+            name: `${result.Driver.givenName} ${result.Driver.familyName}`,
+            time: convertMilliToSeconds(result?.Time?.millis) || 'N/A',
+        }));
     }, [driverResults]);
 
     // State for search input and filtered drivers
